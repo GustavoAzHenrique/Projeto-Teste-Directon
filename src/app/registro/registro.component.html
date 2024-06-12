@@ -1,0 +1,78 @@
+<mat-card class="registro-card">
+    <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+      <h2>Cadastrar Funcionário</h2>
+  
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome" />
+        <mat-error *ngIf="registroForm.get('nome')?.hasError('required')">Nome é obrigatório</mat-error>
+      </mat-form-field>
+  
+      <div class="form-row">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" />
+          <mat-error *ngIf="registroForm.get('email')?.hasError('required')">Email é obrigatório</mat-error>
+          <mat-error *ngIf="registroForm.get('email')?.hasError('email')">Email inválido</mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Data Contratação</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dataContratacao" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="registroForm.get('dataContratacao')?.hasError('required')">Data de contratação é obrigatória</mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="form-row">
+        <mat-form-field appearance="fill">
+          <mat-label>CPF</mat-label>
+          <input matInput formControlName="cpf" />
+          <mat-error *ngIf="registroForm.get('cpf')?.hasError('required')">CPF é obrigatório</mat-error>
+          <mat-error *ngIf="registroForm.get('cpf')?.hasError('pattern')">CPF inválido</mat-error>
+        </mat-form-field>
+  </div>
+        <div formGroupName="endereco">
+            <div class="form-row">
+          <mat-form-field appearance="fill">
+            <mat-label>Rua</mat-label>
+            <input matInput formControlName="rua" />
+            <mat-error *ngIf="registroForm.get('endereco')?.get('rua')?.hasError('required')">Rua é obrigatória</mat-error>
+          </mat-form-field>        
+        </div>
+  
+      <div class="form-row">
+        <mat-form-field appearance="fill">
+          <mat-label>CEP</mat-label>
+          <input matInput formControlName="cep" />
+          <mat-error *ngIf="registroForm.get('endereco')?.get('cep')?.hasError('required')">CEP é obrigatório</mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Bairro</mat-label>
+          <input matInput formControlName="bairro" />
+          <mat-error *ngIf="registroForm.get('endereco')?.get('bairro')?.hasError('required')">Bairro é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="form-row">
+        <mat-form-field appearance="fill">
+          <mat-label>Cidade</mat-label>
+          <input matInput formControlName="cidade" />
+          <mat-error *ngIf="registroForm.get('endereco')?.get('cidade')?.hasError('required')">Cidade é obrigatória</mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Estado</mat-label>
+          <input matInput formControlName="estado" />
+          <mat-error *ngIf="registroForm.get('endereco')?.get('estado')?.hasError('required')">Estado é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+      <div class="buttons">
+        <button mat-raised-button color="primary" type="submit" [disabled]="registroForm.invalid">Salvar</button>
+      </div>
+    </form>
+  </mat-card>
+  
