@@ -3,12 +3,12 @@
       <h2>Login</h2>
       <mat-form-field appearance="fill" class="form-group">
         <mat-label>Usuário</mat-label>
-        <input matInput formControlName="username" />
+        <input placeholder="usuario" matInput formControlName="username" />
         <mat-error *ngIf="loginForm.get('username')?.hasError('required')">Usuário é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" class="form-group">
         <mat-label>Senha</mat-label>
-        <input matInput [type]="'password'" formControlName="password" />
+        <input placeholder="senha" matInput [type]="'password'" formControlName="password" />
         <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Senha é obrigatória</mat-error>
       </mat-form-field>
       <div class="actions">

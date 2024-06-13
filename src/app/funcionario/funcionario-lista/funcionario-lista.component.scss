@@ -1,0 +1,40 @@
+.table-container {
+    overflow: auto;
+  }
+  
+  mat-table {
+    width: 100%;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+    mat-header-row, mat-row {
+      display: flex;
+    }
+  
+    mat-header-cell, mat-cell {
+      flex: 1;
+      padding: 16px;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+  
+      &.mat-column-photo {
+        flex: 0 0 50px;
+      }
+  
+      &.mat-column-actions {
+        flex: 0 0 100px;
+        text-align: center;
+      }
+    }
+  
+    mat-header-cell {
+      font-weight: bold;
+      background: #f0f0f0;
+    }
+  
+    mat-cell {
+      align-items: center;
+    }
+  }
+  

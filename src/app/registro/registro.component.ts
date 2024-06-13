@@ -1,72 +1,61 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { Funcionario, FuncionarioService } from '../services/funcionario-service/funcionario.service';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-registro',
   standalone: true,
-  imports: [
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    CommonModule,
-    
-  ],
+  selector: 'app-registro',
   templateUrl: './registro.component.html',
-  styleUrls: ['./registro.component.scss']
+  styleUrls: ['./registro.component.scss'],
+  imports: [CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule, MatDatepickerModule],
+  providers: [provideNativeDateAdapter()],
 })
-export class RegistroComponent {
-  registroForm: FormGroup;
+export class FuncionarioFormComponent {
+  funcionarioForm!: FormGroup;
+  
+  @Output()
+  atualizarLista = new EventEmitter<boolean>;
 
-  constructor(private fb: FormBuilder) {
-    this.registroForm = this.fb.group({
-      active: [false],
-      photo: [null],
+  constructor(private fb: FormBuilder, private funcionarioService: FuncionarioService) {
+    this.resetForm()
+  }
+
+  resetForm() {
+    this.funcionarioForm = this.fb.group({
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       dataContratacao: ['', Validators.required],
-      cpf: ['', [Validators.required, Validators.pattern('[0-9]{11}')]],
+      cpf: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
       endereco: this.fb.group({
-        rua: ['', Validators.required],
+        street: ['', Validators.required],
         cep: ['', Validators.required],
         bairro: ['', Validators.required],
         cidade: ['', Validators.required],
-        estado: ['', Validators.required]
-      })
+        estado: ['', Validators.required],
+      }),
+      photo: [null],
+      active: [true]
     });
   }
 
   onSubmit() {
-    if (this.registroForm.valid) {
-      console.log('registro', this.registroForm.value);
-      // Lógica de registro
+    if (this.funcionarioForm.valid) {
+      const novoFuncionario: Funcionario = this.funcionarioForm.value;
+      this.funcionarioService.cadastrarFuncionario(novoFuncionario);
+      this.atualizarLista.emit(true);
+      this.funcionarioForm.reset();
     }
   }
 
-  onFileChange(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.registroForm.patchValue({
-        photo: file
-      });
-    }
+  formControl(control: string): AbstractControl {
+    return this.funcionarioForm.controls[control];
   }
 }

@@ -7,7 +7,7 @@ import { LoginComponent } from './login/login.component';
   standalone: true,
   imports: [RouterOutlet, LoginComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'Projeto-Teste-Directon';

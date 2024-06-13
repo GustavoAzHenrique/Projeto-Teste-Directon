@@ -8,6 +8,6 @@ export const routes: Routes = [
       title: 'Pagina Login',
       loadComponent: () => import('./login/login.component').then(m => m.LoginComponent)
     },
-    { path: 'registro', title: 'Pagina Cadastro', loadComponent: () => import('./registro/registro.component').then(m => m.RegistroComponent) },
+    { path: 'pagina-inicial', title: 'Pagina Inicial', loadComponent: () => import('./pagina-inicial/pagina-inicial.component').then(m => m.PaginaInicialComponent) },
   
 ];
