@@ -25,7 +25,7 @@
   </mat-form-field>
 
   <div formGroupName="endereco" class="address-group">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" >
       <mat-label>Rua</mat-label>
       <input placeholder="Rua" matInput formControlName="street">
     </mat-form-field>
@@ -49,7 +49,10 @@
       <mat-label>Estado</mat-label>
       <input placeholder="Estado" matInput formControlName="estado">
     </mat-form-field>
+    <div>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!funcionarioForm.valid">Cadastrar</button>
+  </div>
   </div>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="!funcionarioForm.valid">Cadastrar</button>
+  
 </form>

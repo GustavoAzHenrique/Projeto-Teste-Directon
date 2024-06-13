@@ -8,8 +8,14 @@ form {
   }
 
   button {
+    width: 100%;
     align-self: flex-end;
   }
+  .full-width {
+    width: 100%; 
+  }
+
+  
 
   .address-group {
     display: grid;

@@ -1,4 +1,9 @@
+<div class="header-container">
+  <button mat-raised-button color="primary" type="submit" (click)="logout()">Sair</button>
+</div>
+<mat-card class="pagina-card">
 <div class="main-container">
   <app-registro (atualizarLista)="refresh($event)"></app-registro>
-  <app-funcionario-lista [atualizarEvento]="atualizarEvento" ></app-funcionario-lista>
+  <app-funcionario-lista [atualizarEvento]="atualizarEvento"></app-funcionario-lista>  
 </div>
+</mat-card>

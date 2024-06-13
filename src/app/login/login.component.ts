@@ -7,6 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LoginService } from '../services/login-service/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -26,24 +28,33 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router) {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.loginForm.valid) {
-      const { username, password } = this.loginForm.value;
-      console.log('Login', username, password);
-      // Lógica de autenticação
+      const { email, password } = this.loginForm.value;
+      this.loginService.login(email, password).subscribe({
+        next: (e) => {
+          console.log(e);
+          this.router.navigate(['/pagina-inicial']);
+        },
+        error: (err) => {
+          console.error(err);
+        },
+      });
     }
   }
-
+  
   onForgotPassword() {
+    const email = this.loginForm.controls['email'].value
     console.log('Forgot Password Clicked');
-    // Lógica para recuperação de senha
+    this.loginService.resetPassword(email);
+    alert('Instruções para redefinir sua senha foram enviadas para o seu e-mail.');
   }
 
 }
