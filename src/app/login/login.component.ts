@@ -51,10 +51,16 @@ export class LoginComponent {
   }
   
   onForgotPassword() {
-    const email = this.loginForm.controls['email'].value
-    console.log('Forgot Password Clicked');
-    this.loginService.resetPassword(email);
-    alert('Instruções para redefinir sua senha foram enviadas para o seu e-mail.');
-  }
+    const email = this.loginForm.controls['email'].value;
+
+    if (!email) {
+        alert('Insira um email válido para recuperar sua senha.');
+    } else {
+        console.log('Forgot Password Clicked');
+        this.loginService.resetPassword(email);
+        alert('Instruções para redefinir sua senha foram enviadas para o seu e-mail.');
+    }
+}
+
 
 }
