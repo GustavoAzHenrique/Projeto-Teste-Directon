@@ -16,8 +16,6 @@ export class LoginService {
 
   router = inject(Router);
   firebaseAuth = inject(Auth);
-  user$ = user(this.firebaseAuth);
-  currentUserSig = signal<any | null | undefined>(undefined);
 
   login(email: string, password: string): Observable<UserCredential> {
     return from(signInWithEmailAndPassword(this.firebaseAuth, email, password));

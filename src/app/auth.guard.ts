@@ -3,12 +3,13 @@ import { CanActivateFn, Router } from '@angular/router';
 import { map } from 'rxjs';
 // import { LoginService } from './services/login-service/login.service';
 import { LoginService } from './services/login-service/login.service';
+import { user, Auth } from '@angular/fire/auth';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const loginService = inject(LoginService);
   const router = inject(Router);
 
-  return loginService.user$.pipe(
+  return user(inject(Auth)).pipe(
     map(user => {
       if (user) {
         return true;

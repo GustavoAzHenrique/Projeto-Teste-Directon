@@ -1,7 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './services/login-service/login.service';
+import { Auth, user } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-root',
@@ -12,21 +13,23 @@ import { LoginService } from './services/login-service/login.service';
 })
 export class AppComponent implements OnInit {
   loginService = inject(LoginService);
+  
+  user$ = user(inject(Auth));
+  currentUserSig = signal<any | null | undefined>(undefined);
 
   ngOnInit(): void {
-    this.loginService.user$.subscribe((user: any) => {
+    this.user$.subscribe((user: any) => {
       if (user) {
         console.log(user);
-        this.loginService.currentUserSig.set({
+        this.currentUserSig.set({
           email: user.email!,
           username: user.displayName!,
         });
       } else {
-        this.loginService.currentUserSig.set(null);
+        this.currentUserSig.set(null);
       }
-      console.log(this.loginService.currentUserSig());
+      console.log(this.currentUserSig());
     });
   }
-
 
 }
