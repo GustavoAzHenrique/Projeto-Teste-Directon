@@ -9,6 +9,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
 import {
   Funcionario,
   FuncionarioService,
@@ -19,10 +21,11 @@ import {
   selector: 'app-funcionario-lista',
   templateUrl: './funcionario-lista.component.html',
   styleUrls: ['./funcionario-lista.component.scss'],
-  imports: [CommonModule, MatTableModule, MatButtonModule],
+  imports: [CommonModule, MatTableModule, MatButtonModule, MatCheckboxModule, FormsModule],
 })
 export class FuncionarioListComponent implements OnChanges {
   displayedColumns: string[] = [
+    'select',
     'nome',
     'email',
     'dataContratacao',
@@ -33,9 +36,9 @@ export class FuncionarioListComponent implements OnChanges {
 
   @Input()
   atualizarEvento: boolean = false;
+  toggleAtivo: boolean = false;
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes['atualizarEvento']);
     if (changes['atualizarEvento'] && changes['atualizarEvento'].currentValue) {
       this.carregarFuncionarios();
     }
@@ -52,6 +55,11 @@ export class FuncionarioListComponent implements OnChanges {
 
   removeFuncionario(funcionario: Funcionario) {
     this.funcionarioService.removerFuncionario(funcionario.id);
+    this.dataSource = this.funcionarioService.listarTodosFuncionarios();
+  }
+
+  toggleFuncionarioStatus(funcionario: Funcionario) {
+    this.funcionarioService.toggleAtivo(funcionario.id);
     this.dataSource = this.funcionarioService.listarTodosFuncionarios();
   }
 }

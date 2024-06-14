@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 export interface Funcionario {
   id: number;
-  active: boolean;
+  ativo: boolean;
   photo: string | null;
   nome: string;
   email: string;
@@ -82,6 +82,14 @@ export class FuncionarioService {
     const index = this.funcionarios.findIndex(f => f.id === id);
     if (index !== -1) {
       this.funcionarios.splice(index, 1);
+      this.saveFuncionariosToStorage();
+    }
+  }
+
+  toggleAtivo(id: number) {
+    const funcionario = this.funcionarios.find(f => f.id === id);
+    if (funcionario) {
+      funcionario.ativo = !funcionario.ativo;
       this.saveFuncionariosToStorage();
     }
   }

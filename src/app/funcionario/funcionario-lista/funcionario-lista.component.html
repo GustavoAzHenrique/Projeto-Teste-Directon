@@ -1,4 +1,15 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>Ativo</th>
+    <td mat-cell *matCellDef="let funcionario">
+      <mat-checkbox
+        [(ngModel)]="funcionario.ativo"
+        (change)="toggleFuncionarioStatus(funcionario)"
+      >
+      </mat-checkbox>
+    </td>
+  </ng-container>
     <ng-container matColumnDef="nome">
       <th mat-header-cell *matHeaderCellDef> Nome </th>
       <td mat-cell *matCellDef="let element"> {{element.nome}} </td>

@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.user$.subscribe((user: any) => {
       if (user) {
-        console.log(user);
         this.currentUserSig.set({
           email: user.email!,
           username: user.displayName!,
@@ -28,7 +27,6 @@ export class AppComponent implements OnInit {
       } else {
         this.currentUserSig.set(null);
       }
-      console.log(this.currentUserSig());
     });
   }
 

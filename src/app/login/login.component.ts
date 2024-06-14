@@ -40,15 +40,15 @@ export class LoginComponent {
       const { email, password } = this.loginForm.value;
       this.loginService.login(email, password).subscribe({
         next: (e) => {
-          console.log(e);
           this.router.navigate(['/pagina-inicial']);
         },
         error: (err) => {
           console.error(err);
+          alert('Este e-mail não tem as permissões necessárias para acesso.');
         },
       });
     }
-  }
+  }  
   
   onForgotPassword() {
     const email = this.loginForm.controls['email'].value;
@@ -56,7 +56,6 @@ export class LoginComponent {
     if (!email) {
         alert('Insira um email válido para recuperar sua senha.');
     } else {
-        console.log('Forgot Password Clicked');
         this.loginService.resetPassword(email);
         alert('Instruções para redefinir sua senha foram enviadas para o seu e-mail.');
     }
