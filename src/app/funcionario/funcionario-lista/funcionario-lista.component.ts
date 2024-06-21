@@ -44,6 +44,13 @@ export class FuncionarioListComponent implements OnChanges {
     }
   }
 
+  formatCpf(cpf: string): string {
+    if (!cpf) return '';
+    cpf = cpf.replace(/\D/g, '');
+    if (cpf.length !== 11) return cpf;
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  }
+
   carregarFuncionarios() {
     this.funcionarioService.loadFuncionariosFromStorage();
     this.dataSource = this.funcionarioService.listarTodosFuncionarios();

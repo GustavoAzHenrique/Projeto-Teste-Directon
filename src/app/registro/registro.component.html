@@ -1,58 +1,66 @@
-<form [formGroup]="funcionarioForm" (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="fill">
+<form class="ajuste-form" [formGroup]="funcionarioForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline" class="full-width">
     <mat-label>Nome</mat-label>
-    <input placeholder="Nome" matInput formControlName="nome">
+    <mat-icon matPrefix>person</mat-icon>
+    <input placeholder="Nome" matInput formControlName="nome" aria-label="Nome">
     <mat-error *ngIf="formControl('nome').invalid && formControl('nome').touched">Nome é obrigatório</mat-error>
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline" class="full-width">
     <mat-label>Email</mat-label>
-    <input placeholder="E-mail" matInput formControlName="email">
+    <mat-icon matPrefix>email</mat-icon>
+    <input placeholder="E-mail" matInput formControlName="email" aria-label="Email">
     <mat-error *ngIf="formControl('email').invalid && formControl('email').touched">Email inválido</mat-error>
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline" class="full-width">
     <mat-label>Data de Contratação</mat-label>
-    <input placeholder="Data de Contratação" matInput [matDatepicker]="picker" formControlName="dataContratacao">
+    <mat-icon matPrefix>event</mat-icon>
+    <input placeholder="Data de Contratação" matInput [matDatepicker]="picker" formControlName="dataContratacao" aria-label="Data de Contratação">
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline" class="full-width">
     <mat-label>CPF</mat-label>
-    <input placeholder="CPF" matInput formControlName="cpf">
+    <mat-icon matPrefix>badge</mat-icon>
+    <input placeholder="CPF" matInput formControlName="cpf" aria-label="CPF">
     <mat-error *ngIf="formControl('cpf').invalid && formControl('cpf').touched">CPF inválido</mat-error>
   </mat-form-field>
 
   <div formGroupName="endereco" class="address-group">
-    <mat-form-field appearance="fill" >
+    <mat-form-field appearance="outline">
       <mat-label>Rua</mat-label>
-      <input placeholder="Rua" matInput formControlName="street">
+      <mat-icon matPrefix>location_on</mat-icon>
+      <input placeholder="Rua" matInput formControlName="street" aria-label="Rua">
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>CEP</mat-label>
-      <input placeholder="CEP" matInput formControlName="cep">
+      <mat-icon matPrefix>map</mat-icon>
+      <input placeholder="CEP" matInput formControlName="cep" aria-label="CEP">
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Bairro</mat-label>
-      <input placeholder="Bairro" matInput formControlName="bairro">
+      <mat-icon matPrefix>home</mat-icon>
+      <input placeholder="Bairro" matInput formControlName="bairro" aria-label="Bairro">
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Cidade</mat-label>
-      <input placeholder="Cidade" matInput formControlName="cidade">
+      <mat-icon matPrefix>location_city</mat-icon>
+      <input placeholder="Cidade" matInput formControlName="cidade" aria-label="Cidade">
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Estado</mat-label>
-      <input placeholder="Estado" matInput formControlName="estado">
+      <mat-icon matPrefix>public</mat-icon>
+      <input placeholder="Estado" matInput formControlName="estado" aria-label="Estado">
     </mat-form-field>
-    <div>
-    <button mat-raised-button color="primary" type="submit" [disabled]="!funcionarioForm.valid">Cadastrar</button>
-  </div>
   </div>
 
-  
+  <button mat-raised-button color="primary" type="submit" [disabled]="!funcionarioForm.valid" aria-label="Cadastrar">
+    Cadastrar
+  </button>
 </form>

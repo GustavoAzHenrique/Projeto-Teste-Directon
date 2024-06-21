@@ -8,14 +8,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Funcionario, FuncionarioService } from '../services/funcionario-service/funcionario.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { Router } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   standalone: true,
   selector: 'app-registro',
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.scss'],
-  imports: [CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule, MatDatepickerModule],
+  imports: [CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule, MatDatepickerModule, MatIcon],
   providers: [provideNativeDateAdapter()],
 })
 export class FuncionarioFormComponent {
