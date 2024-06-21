@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LoginService } from '../services/login-service/login.service';
 import { Router } from '@angular/router';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
@@ -20,13 +21,15 @@ import { Router } from '@angular/router';
     MatIconModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  
 
   constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router) {
     this.loginForm = this.fb.group({
@@ -37,12 +40,14 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
+      
       const { email, password } = this.loginForm.value;
       this.loginService.login(email, password).subscribe({
         next: (e) => {
           this.router.navigate(['/pagina-inicial']);
         },
         error: (err) => {
+          
           console.error(err);
           alert('Este e-mail não tem as permissões necessárias para acesso.');
         },

@@ -1,9 +1,18 @@
 <div class="header-container">
-  <button mat-raised-button color="primary" type="submit" (click)="logout()">Sair</button>
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu do Usuário">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Sair</span>
+    </button>
+  </mat-menu>
 </div>
+
 <mat-card class="pagina-card">
-<div class="main-container">
-  <app-registro (atualizarLista)="refresh($event)"></app-registro>
-  <app-funcionario-lista [atualizarEvento]="atualizarEvento"></app-funcionario-lista>  
-</div>
+  <div class="main-container">
+    <app-registro (atualizarLista)="refresh($event)"></app-registro>
+    <app-funcionario-lista [atualizarEvento]="atualizarEvento"></app-funcionario-lista>
+  </div>
 </mat-card>

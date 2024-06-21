@@ -1,22 +1,42 @@
 <mat-card class="login-card">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <h2>Login</h2>
-      <mat-form-field appearance="fill" class="form-group">
-        <mat-label>Email</mat-label>
-        <input placeholder="usuario" matInput formControlName="email" />
-        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email é obrigatório</mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="form-group">
-        <mat-label>Senha</mat-label>
-        <input placeholder="senha" matInput [type]="'password'" formControlName="password" />
-        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Senha é obrigatória</mat-error>
-      </mat-form-field>
-      <div class="actions">
-        <a href="#" (click)="onForgotPassword()">Esqueceu a senha?</a>
-      </div>
-      <div class="buttons">
-        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Entrar</button>
-      </div>
-    </form>
-  </mat-card>
-  
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h2>Entrar</h2>
+    <p>Bem-vindo de volta! Por favor, faça login para continuar.</p>
+    <mat-form-field appearance="outline" class="form-group">
+      <mat-label>Email</mat-label>
+      <mat-icon matPrefix>email</mat-icon>
+      <input
+        matInput
+        placeholder="exemplo@dominio.com"
+        formControlName="email"
+        aria-label="Email"
+        aria-describedby="email-helper"
+      />
+      <mat-hint id="email-helper">Digite seu email registrado.</mat-hint>
+      <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email é obrigatório</mat-error>
+      <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Email inválido</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-group">
+      <mat-label>Senha</mat-label>
+      <mat-icon matPrefix>lock</mat-icon>
+      <input
+        matInput
+        placeholder="********"
+        [type]="'password'"
+        formControlName="password"
+        aria-label="Senha"
+        aria-describedby="password-helper"
+      />
+      <mat-hint id="password-helper">Digite sua senha segura.</mat-hint>
+      <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Senha é obrigatória</mat-error>
+    </mat-form-field>
+    <div class="actions">
+      <a href="#" (click)="onForgotPassword()" aria-label="Esqueceu a senha?">Esqueceu a senha?</a>
+    </div>
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" aria-label="Entrar">
+        Entrar
+      </button>
+    </div>
+  </form>
+</mat-card>
