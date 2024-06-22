@@ -5,7 +5,6 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,17 +14,19 @@ import {
   Funcionario,
   FuncionarioService,
 } from '../../services/funcionario-service/funcionario.service';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   standalone: true,
   selector: 'app-funcionario-lista',
   templateUrl: './funcionario-lista.component.html',
   styleUrls: ['./funcionario-lista.component.scss'],
-  imports: [CommonModule, MatTableModule, MatButtonModule, MatCheckboxModule, FormsModule],
+  imports: [CommonModule, MatTableModule, MatButtonModule, MatCheckboxModule, FormsModule, MatTooltip],
 })
 export class FuncionarioListComponent implements OnChanges {
   displayedColumns: string[] = [
     'select',
+    'imagemUrl',
     'nome',
     'email',
     'dataContratacao',

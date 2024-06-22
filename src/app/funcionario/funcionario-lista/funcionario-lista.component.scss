@@ -1,5 +1,6 @@
 .table-container {
   overflow: auto;
+  max-width: 100%;
 }
 
 mat-table {
@@ -7,56 +8,138 @@ mat-table {
   background: white;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  table-layout: fixed; 
+}
 
-  mat-header-row, mat-row {
-    display: flex;
+mat-header-row, mat-row {
+  display: flex;
+  align-items: stretch; 
+}
+
+th,td {
+  justify-content: center; 
+  align-items: center; 
+  text-align: center;
+}
+
+mat-header-cell, mat-cell {
+  padding: 8px;
+  border-bottom: 1px solid #e0e0e0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: break-word;
+  box-sizing: border-box; 
+  transition: background-color 0.2s ease-in-out;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  text-align: center; 
+
+  &:hover {
+    background-color: #f5f5f5;
   }
+}
 
-  mat-header-cell, mat-cell {
-    flex: 1;
-    padding: 16px;
-    text-align: left;
-    border-bottom: 1px solid #e0e0e0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 
-    &.mat-column-nome,
-    &.mat-column-endereco {
-      max-width: 200px;
+.column-select,
+.column-imagem {
+  width: 50px; 
+  max-width: 50px;
+  min-width: 50px;
+  padding: 0; 
+  justify-content: center;
+}
+
+.column-nome {
+  flex: 1 1 150px; 
+  max-width: 200px;
+  min-width: 150px;
+}
+
+.column-email {
+  flex: 1 1 200px; 
+  max-width: 250px;
+  min-width: 200px;
+
+  .email-link {
+    color: #32cd32; 
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+      color: #228b22; 
     }
   }
+}
 
-  mat-header-cell {
-    font-weight: bold;
-    background: #f0f0f0;
-  }
+.column-data,
+.column-cpf {
+  flex: 0 0 auto;
+  width: 150px; 
+  max-width: 150px;
+  min-width: 150px;
+}
 
-  mat-cell {
-    align-items: center;
-  }
+.column-endereco {
+  flex: 2 1 300px;
+  max-width: 300px;
+}
+
+.img-wrapper {
+  width: 40px; 
+  height: 40px; 
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  position: relative;
+  background-color: transparent;
+}
+
+.img-column {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
 }
 
 .mat-table-responsive {
   display: block;
   overflow-x: auto;
   width: 100%;
+}
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
+.mat-column-nome {
+  max-width: 200px;
+}
+
+.mat-column-endereco {
+  max-width: 300px;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
   mat-header-cell, mat-cell {
-    word-wrap: break-word; 
-    white-space: nowrap; 
+    padding: 4px;
+    font-size: 12px;
   }
 
-  .mat-column-nome {
-    max-width: 200px;
-  }
-
-  .mat-column-endereco {
-    max-width: 300px;
+  .column-nome,
+  .column-email,
+  .column-data,
+  .column-cpf,
+  .column-endereco {
+    max-width: none;
   }
 }

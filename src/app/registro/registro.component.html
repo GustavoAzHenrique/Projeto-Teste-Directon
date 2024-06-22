@@ -28,36 +28,45 @@
     <mat-error *ngIf="formControl('cpf').invalid && formControl('cpf').touched">CPF inválido</mat-error>
   </mat-form-field>
 
-  <div formGroupName="endereco" class="address-group">
-    <mat-form-field appearance="outline">
-      <mat-label>Rua</mat-label>
-      <mat-icon matPrefix>location_on</mat-icon>
-      <input placeholder="Rua" matInput formControlName="street" aria-label="Rua">
-    </mat-form-field>
+  <div class="address-group-container">
+    <div formGroupName="endereco" class="address-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Rua</mat-label>
+        <mat-icon matPrefix>location_on</mat-icon>
+        <input placeholder="Rua" matInput formControlName="street" aria-label="Rua">
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>CEP</mat-label>
-      <mat-icon matPrefix>map</mat-icon>
-      <input placeholder="CEP" matInput formControlName="cep" aria-label="CEP">
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>CEP</mat-label>
+        <mat-icon matPrefix>map</mat-icon>
+        <input placeholder="CEP" matInput formControlName="cep" aria-label="CEP">
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Bairro</mat-label>
-      <mat-icon matPrefix>home</mat-icon>
-      <input placeholder="Bairro" matInput formControlName="bairro" aria-label="Bairro">
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Bairro</mat-label>
+        <mat-icon matPrefix>home</mat-icon>
+        <input placeholder="Bairro" matInput formControlName="bairro" aria-label="Bairro">
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Cidade</mat-label>
-      <mat-icon matPrefix>location_city</mat-icon>
-      <input placeholder="Cidade" matInput formControlName="cidade" aria-label="Cidade">
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Cidade</mat-label>
+        <mat-icon matPrefix>location_city</mat-icon>
+        <input placeholder="Cidade" matInput formControlName="cidade" aria-label="Cidade">
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Estado</mat-label>
-      <mat-icon matPrefix>public</mat-icon>
-      <input placeholder="Estado" matInput formControlName="estado" aria-label="Estado">
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Estado</mat-label>
+        <mat-icon matPrefix>public</mat-icon>
+        <input placeholder="Estado" matInput formControlName="estado" aria-label="Estado">
+      </mat-form-field>
+    </div>
+
+    <div class="file-upload-container">
+      <label for="file-upload" class="file-upload-label">
+        <mat-icon>upload</mat-icon> Foto
+      </label>
+      <input id="file-upload" type="file" class="file-upload-input" (change)="onFileChange($event)">
+    </div>
   </div>
 
   <button mat-raised-button color="primary" type="submit" [disabled]="!funcionarioForm.valid" aria-label="Cadastrar">

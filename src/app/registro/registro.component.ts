@@ -41,10 +41,26 @@ export class FuncionarioFormComponent {
         cidade: ['', Validators.required],
         estado: ['', Validators.required],
       }),
-      photo: [null],
+      imagemUrl: [''],
       active: [true]
     });
   }
+
+  onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64String = reader.result as string;
+        this.funcionarioForm.patchValue({
+          imagemUrl: base64String
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  
 
   onSubmit() {
     if (this.funcionarioForm.valid) {

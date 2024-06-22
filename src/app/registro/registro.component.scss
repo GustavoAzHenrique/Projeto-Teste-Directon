@@ -85,4 +85,60 @@ form {
       border-radius: 5px;
     }
   }
+
+  .address-group-container {
+    display: grid;
+    gap: 15px;
+    grid-template-columns: 1fr;
+    
+    @media (min-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .address-group {
+    display: contents;
+
+    @media (min-width: 768px) {
+      display: contents;
+    }
+  }
+
+  
+  .file-upload-container {
+    align-self: end;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid darken($primary-color, 20%);
+    border-radius: 5px;
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+
+    @media (min-width: 768px) {
+      grid-column: 2;
+      grid-row: 3;
+    }
+
+    &:hover {
+      background-color: lighten($primary-color, 40%);
+    }
+
+    .file-upload-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: black;
+      cursor: pointer;
+    }
+
+    mat-icon{
+      color: $primary-color
+    }
+
+    .file-upload-input {
+      display: none;
+    }
+  }
 }

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 export interface Funcionario {
   id: number;
   ativo: boolean;
-  photo: string | null;
+  imagemUrl?: string;
   nome: string;
   email: string;
   dataContratacao: Date;
