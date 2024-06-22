@@ -17,6 +17,7 @@ import {
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatIcon } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   standalone: true,
@@ -31,6 +32,7 @@ import { MatIcon } from '@angular/material/icon';
     ReactiveFormsModule,
     MatDatepickerModule,
     MatIcon,
+    MatTooltipModule
   ],
   providers: [provideNativeDateAdapter()],
 })

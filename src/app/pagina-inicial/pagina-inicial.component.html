@@ -1,7 +1,21 @@
 <div class="header-container">
-  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu do Usuário">
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    aria-label="Menu do Usuário"
+    class="header-button"
+  >
     <mat-icon>account_circle</mat-icon>
   </button>
+
+  <div class="header-image-container">
+    <img
+      class="header-image"
+      src="https://media.licdn.com/dms/image/D4D3DAQEc8yMb-Ziz5g/image-scale_191_1128/0/1704314786731/directontecnologia_cover?e=1719691200&v=beta&t=jtF8eMD-q3KhAXBfa4-k6YK1mBdrKQI8bRPafQVoukc"
+      alt="Header Image"
+    />
+  </div>
+
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="logout()">
       <mat-icon>logout</mat-icon>
@@ -13,6 +27,8 @@
 <mat-card class="pagina-card">
   <div class="main-container">
     <app-registro (atualizarLista)="refresh($event)"></app-registro>
-    <app-funcionario-lista [atualizarEvento]="atualizarEvento"></app-funcionario-lista>
+    <app-funcionario-lista
+      [atualizarEvento]="atualizarEvento"
+    ></app-funcionario-lista>
   </div>
 </mat-card>
