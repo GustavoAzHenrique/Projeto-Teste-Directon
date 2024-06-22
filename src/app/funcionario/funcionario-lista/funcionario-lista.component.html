@@ -1,14 +1,19 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-container">
+<table
+  mat-table
+  [dataSource]="dataSource"
+  class="mat-elevation-z8 table-container"
+>
   <!-- Coluna de Seleção -->
-  <ng-container matColumnDef="select">
-    <th mat-header-cell *matHeaderCellDef class="column-select">Ativo</th>
-    <td mat-cell *matCellDef="let funcionario" class="column-select">
-      <mat-checkbox
+  <ng-container matColumnDef="toggle">
+    <th mat-header-cell *matHeaderCellDef class="column-toggle">Ativo</th>
+    <td mat-cell *matCellDef="let funcionario" class="column-toggle">
+      <mat-slide-toggle
         [(ngModel)]="funcionario.ativo"
         (change)="toggleFuncionarioStatus(funcionario)"
-        class="checkbox-custom"
-        aria-label="Selecionar funcionário {{funcionario.nome}}"
-      ></mat-checkbox>
+        (click)="toggleFuncionarioStatus(funcionario)"
+        class="toggle-custom"
+        aria-label="Selecionar funcionario {{ funcionario.nome }}"
+      ></mat-slide-toggle>
     </td>
   </ng-container>
 
@@ -17,7 +22,12 @@
     <th mat-header-cell *matHeaderCellDef class="column-imagem">Foto</th>
     <td mat-cell *matCellDef="let element" class="column-imagem">
       <div class="img-wrapper">
-        <img *ngIf="element.imagemUrl" [src]="element.imagemUrl" alt="Imagem do funcionário" class="img-column" />
+        <img
+          *ngIf="element.imagemUrl"
+          [src]="element.imagemUrl"
+          alt="Imagem do funcionário"
+          class="img-column"
+        />
       </div>
     </td>
   </ng-container>
@@ -25,43 +35,109 @@
   <!-- Coluna de Nome -->
   <ng-container matColumnDef="nome">
     <th mat-header-cell *matHeaderCellDef class="column-nome">Nome</th>
-    <td mat-cell *matCellDef="let element" class="column-nome" [matTooltip]="element.nome.length > 15 ? element.nome : ''">
-      <span class="text-ellipsis">{{element.nome}}</span>
+    <td
+      mat-cell
+      *matCellDef="let element"
+      class="column-nome"
+      [matTooltip]="element.nome.length > 15 ? element.nome : ''"
+    >
+      <span class="text-ellipsis">{{ element.nome }}</span>
     </td>
   </ng-container>
 
   <!-- Coluna de Email -->
   <ng-container matColumnDef="email">
     <th mat-header-cell *matHeaderCellDef class="column-email">Email</th>
-    <td mat-cell *matCellDef="let element" class="column-email" [matTooltip]="element.email.length > 20 ? element.email : ''">
-      <a href="mailto:{{element.email}}" class="email-link">{{element.email}}</a>
+    <td mat-cell *matCellDef="let element" class="column-email">
+      <a href="mailto:{{ element.email }}" class="email-link">{{
+        element.email
+      }}</a>
     </td>
   </ng-container>
 
   <!-- Coluna de Data de Contratação -->
   <ng-container matColumnDef="dataContratacao">
-    <th mat-header-cell *matHeaderCellDef class="column-data">Data de Contratação</th>
+    <th mat-header-cell *matHeaderCellDef class="column-data">
+      Data de Contratação
+    </th>
     <td mat-cell *matCellDef="let element" class="column-data">
-      {{element.dataContratacao | date: 'dd/MM/yyyy'}}
+      {{ element.dataContratacao | date : "dd/MM/yyyy" }}
     </td>
   </ng-container>
 
   <!-- Coluna de CPF -->
   <ng-container matColumnDef="cpf">
     <th mat-header-cell *matHeaderCellDef class="column-cpf">CPF</th>
-    <td mat-cell *matCellDef="let element" class="column-cpf" [matTooltip]="formatCpf(element.cpf).length > 15 ? formatCpf(element.cpf) : ''">
-      <span class="text-ellipsis">{{formatCpf(element.cpf)}}</span>
+    <td
+      mat-cell
+      *matCellDef="let element"
+      class="column-cpf"
+      [matTooltip]="
+        formatCpf(element.cpf).length > 15 ? formatCpf(element.cpf) : ''
+      "
+    >
+      <span class="text-ellipsis">{{ formatCpf(element.cpf) }}</span>
     </td>
   </ng-container>
 
   <!-- Coluna de Endereço -->
   <ng-container matColumnDef="endereco">
     <th mat-header-cell *matHeaderCellDef class="column-endereco">Endereço</th>
-    <td mat-cell *matCellDef="let element" class="column-endereco" [matTooltip]="(element.endereco.street + ', ' + element.endereco.bairro + ', ' + element.endereco.cidade + ' - ' + element.endereco.estado).length > 40 ? (element.endereco.street + ', ' + element.endereco.bairro + ', ' + element.endereco.cidade + ' - ' + element.endereco.estado) : ''">
-      <span class="text-ellipsis">{{element.endereco.street}}, {{element.endereco.bairro}}, {{element.endereco.cidade}} - {{element.endereco.estado}}</span>
+    <td
+      mat-cell
+      *matCellDef="let element"
+      class="column-endereco"
+      [matTooltip]="
+        (
+          element.endereco.street +
+          ', ' +
+          element.endereco.bairro +
+          ', ' +
+          element.endereco.cidade +
+          ' - ' +
+          element.endereco.estado
+        ).length > 40
+          ? element.endereco.street +
+            ', ' +
+            element.endereco.bairro +
+            ', ' +
+            element.endereco.cidade +
+            ' - ' +
+            element.endereco.estado
+          : ''
+      "
+    >
+      <span class="text-ellipsis"
+        >{{ element.endereco.street }}, {{ element.endereco.bairro }},
+        {{ element.endereco.cidade }} - {{ element.endereco.estado }}</span
+      >
+    </td>
+  </ng-container>
+
+  <!-- Coluna de Apagar -->
+  <ng-container matColumnDef="apagar">
+    <th mat-header-cell *matHeaderCellDef class="column-apagar">Apagar</th>
+    <td mat-cell *matCellDef="let element" class="column-apagar">
+      <button
+        mat-icon-button
+        (click)="confirmRemoveFuncionario(element)"
+        [matTooltip]="
+          element.ativo
+            ? 'Somente funcionários desativados podem ser excluídos.'
+            : 'Excluir funcionário'
+        "
+        matTooltipPosition="above"
+      >
+        <mat-icon color="warn">delete</mat-icon>
+      </button>
     </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
+
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 15]"
+  showFirstLastButtons
+></mat-paginator>

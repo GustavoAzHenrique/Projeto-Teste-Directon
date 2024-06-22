@@ -8,66 +8,88 @@ mat-table {
   background: white;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  table-layout: fixed; 
+  table-layout: fixed;
 }
 
-mat-header-row, mat-row {
+mat-header-row,
+mat-row {
   display: flex;
-  align-items: stretch; 
+  align-items: stretch;
 }
 
-th,td {
-  justify-content: center; 
-  align-items: center; 
+th,
+td {
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
-mat-header-cell, mat-cell {
+mat-header-cell,
+mat-cell {
   padding: 8px;
   border-bottom: 1px solid #e0e0e0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   word-wrap: break-word;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   transition: background-color 0.2s ease-in-out;
   display: flex;
-  justify-content: center; 
-  align-items: center; 
-  text-align: center; 
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 
   &:hover {
     background-color: #f5f5f5;
   }
 }
 
+.column-toggle {
+  .toggle-custom {
+    transform: scale(0.7);
+    margin: 0;
+    padding: 0;
+    width: 36px;
+    height: 20px;
+    min-width: 36px;
 
-.column-select,
-.column-imagem {
-  width: 50px; 
+    .mat-slide-toggle-thumb {
+      width: 16px;
+      height: 16px;
+    }
+
+    .mat-slide-toggle-bar {
+      height: 16px;
+      border-radius: 8px;
+    }
+  }
+}
+.column-imagem,
+.column-apagar {
+  width: 50px;
   max-width: 50px;
   min-width: 50px;
-  padding: 0; 
+  padding: 0;
   justify-content: center;
 }
 
 .column-nome {
-  flex: 1 1 150px; 
+  flex: 1 1 150px;
   max-width: 200px;
   min-width: 150px;
 }
 
 .column-email {
-  flex: 1 1 200px; 
+  flex: 1 1 200px;
   max-width: 250px;
   min-width: 200px;
 
   .email-link {
-    color: #32cd32; 
+    color: #3270cd;
     text-decoration: none;
     &:hover {
       text-decoration: underline;
-      color: #228b22; 
+      color: #3270cd;
     }
   }
 }
@@ -75,7 +97,7 @@ mat-header-cell, mat-cell {
 .column-data,
 .column-cpf {
   flex: 0 0 auto;
-  width: 150px; 
+  width: 150px;
   max-width: 150px;
   min-width: 150px;
 }
@@ -86,8 +108,8 @@ mat-header-cell, mat-cell {
 }
 
 .img-wrapper {
-  width: 40px; 
-  height: 40px; 
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   overflow: hidden;
   display: inline-block;
@@ -130,7 +152,8 @@ table {
 }
 
 @media (max-width: 768px) {
-  mat-header-cell, mat-cell {
+  mat-header-cell,
+  mat-cell {
     padding: 4px;
     font-size: 12px;
   }

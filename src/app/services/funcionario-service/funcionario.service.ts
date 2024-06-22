@@ -18,12 +18,13 @@ export interface Funcionario {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FuncionarioService {
   private funcionarios: Funcionario[] = [];
   private nextId = 1;
   private storageAvailable: boolean;
+  private readonly STORAGE_KEY = 'funcionarios';
 
   constructor() {
     this.storageAvailable = this.checkLocalStorageAvailability();
@@ -52,7 +53,7 @@ export class FuncionarioService {
       if (storedFuncionarios) {
         try {
           this.funcionarios = JSON.parse(storedFuncionarios);
-          this.nextId = Math.max(...this.funcionarios.map(f => f.id)) + 1;
+          this.nextId = Math.max(...this.funcionarios.map((f) => f.id)) + 1;
           this.saveFuncionariosToStorage();
         } catch (error) {
           console.error('Error parsing stored funcionarios:', error);
@@ -69,7 +70,16 @@ export class FuncionarioService {
   }
 
   listarTodosFuncionarios(): Funcionario[] {
-    return this.funcionarios;
+    const funcionariosJson = localStorage.getItem(this.STORAGE_KEY);
+    if (funcionariosJson) {
+      return JSON.parse(funcionariosJson).map((funcionario: any) => {
+        return {
+          ...funcionario,
+          dataContratacao: new Date(funcionario.dataContratacao),
+        };
+      });
+    }
+    return [];
   }
 
   cadastrarFuncionario(funcionario: Funcionario) {
@@ -79,18 +89,31 @@ export class FuncionarioService {
   }
 
   removerFuncionario(id: number) {
-    const index = this.funcionarios.findIndex(f => f.id === id);
-    if (index !== -1) {
-      this.funcionarios.splice(index, 1);
-      this.saveFuncionariosToStorage();
-    }
+    let funcionarios = this.listarTodosFuncionarios();
+    funcionarios = funcionarios.filter((f) => f.id !== id);
+    this.saveToStorage(funcionarios);
   }
 
   toggleAtivo(id: number) {
-    const funcionario = this.funcionarios.find(f => f.id === id);
+    const funcionario = this.funcionarios.find((f) => f.id === id);
     if (funcionario) {
       funcionario.ativo = !funcionario.ativo;
-      this.saveFuncionariosToStorage();
+      localStorage.setItem('funcionarios', JSON.stringify(this.funcionarios));
     }
+  }
+
+  atualizarFuncionario(funcionario: Funcionario) {
+    let funcionarios = this.listarTodosFuncionarios();
+    const index = funcionarios.findIndex((f) => f.id === funcionario.id);
+    if (index !== -1) {
+      funcionarios[index] = funcionario;
+    } else {
+      funcionarios.push(funcionario);
+    }
+    this.saveToStorage(funcionarios);
+  }
+
+  private saveToStorage(funcionarios: Funcionario[]) {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(funcionarios));
   }
 }

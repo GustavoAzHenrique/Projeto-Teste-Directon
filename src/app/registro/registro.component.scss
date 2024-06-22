@@ -2,7 +2,7 @@ $primary-color: #388e3c;
 $secondary-color: #81c784;
 $error-color: #d32f2f;
 $background-color: #f0f4c3;
-$text-color: #2e7d32;
+$text-color: #000000;
 $link-color: #43a047;
 $shadow-color: rgba(0, 0, 0, 0.1);
 $input-background: rgba(255, 255, 255, 0.9);
@@ -21,11 +21,10 @@ form {
   }
 
   mat-form-field {
-    
     width: 100%;
     background-color: $input-background;
     border-radius: 5px;
- 
+
     .mat-form-field-outline {
       border-color: $primary-color;
     }
@@ -44,7 +43,6 @@ form {
       color: $error-color;
     }
   }
-
 
   button {
     width: 100%;
@@ -90,7 +88,7 @@ form {
     display: grid;
     gap: 15px;
     grid-template-columns: 1fr;
-    
+
     @media (min-width: 768px) {
       grid-template-columns: 1fr 1fr;
     }
@@ -104,15 +102,16 @@ form {
     }
   }
 
-  
   .file-upload-container {
     align-self: end;
     display: flex;
     align-items: center;
     gap: 10px;
-    border: 1px solid darken($primary-color, 20%);
+    border: 1px solid darken($primary-color, 15%);
     border-radius: 5px;
     padding: 15px;
+    background-color: $input-background;
+    
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
 
@@ -133,12 +132,59 @@ form {
       cursor: pointer;
     }
 
-    mat-icon{
-      color: $primary-color
+    mat-icon {
+      color: $primary-color;
     }
 
     .file-upload-input {
       display: none;
+    }
+  }
+
+  .success-message {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    background-color: #4caf50;
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: fade-slide-in 0.5s ease-out, fade-slide-out 0.5s 2.5s ease-in;
+  }
+
+  .success-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  mat-icon {
+    font-size: 24px;
+  }
+
+  @keyframes fade-slide-in {
+    0% {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fade-slide-out {
+    0% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(100%);
     }
   }
 }
