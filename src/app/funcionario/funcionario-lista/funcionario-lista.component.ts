@@ -1,7 +1,9 @@
 import {
+  AfterViewInit,
   Component,
   Input,
   OnChanges,
+  OnInit,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -20,6 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginatorIntlPt } from '../../services/paginator/mat-paginator-intl-pt';
+import { Subscription } from 'rxjs';
 
 export const MOCK_FUNCIONARIOS: Funcionario[] = [
   {
@@ -138,10 +141,10 @@ export const MOCK_FUNCIONARIOS: Funcionario[] = [
     MatSortModule,
   ],
   providers: [
-    { provide: MatPaginatorIntl, useClass: MatPaginatorIntlPt } // Registrando o provedor personalizado
+    { provide: MatPaginatorIntl, useClass: MatPaginatorIntlPt }
   ]
 })
-export class FuncionarioListComponent implements OnChanges {
+export class FuncionarioListComponent implements OnInit, AfterViewInit, OnChanges {
   displayedColumns: string[] = [
     'toggle',
     'imagemUrl',
@@ -153,7 +156,8 @@ export class FuncionarioListComponent implements OnChanges {
     'apagar',
   ];
   dataSource = new MatTableDataSource<Funcionario>();
-  idsRemovidos: Set<number> = new Set(); // Controla os IDs removidos temporariamente di MOCK
+  idsRemovidos: Set<number> = new Set();
+  private subscription: Subscription = new Subscription();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -161,9 +165,19 @@ export class FuncionarioListComponent implements OnChanges {
   @Input()
   atualizarEvento: boolean = false;
 
+  constructor(private funcionarioService: FuncionarioService) {}
+
+  ngOnInit() {
+    this.subscription.add(
+      this.funcionarioService.funcionarios$.subscribe(funcionarios => {
+        this.carregarFuncionarios(funcionarios);
+      })
+    );
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['atualizarEvento'] && changes['atualizarEvento'].currentValue) {
-      this.carregarFuncionarios();
+      this.carregarFuncionarios(this.funcionarioService.listarTodosFuncionarios());
     }
   }
 
@@ -179,25 +193,19 @@ export class FuncionarioListComponent implements OnChanges {
     return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
   }
 
-  carregarFuncionarios() {
-    const funcionariosDoServico =
-      this.funcionarioService.listarTodosFuncionarios();
+  carregarFuncionarios(funcionarios: Funcionario[]) {
     const todosFuncionarios = [
       ...MOCK_FUNCIONARIOS,
-      ...funcionariosDoServico,
-    ].filter(funcionario => !this.idsRemovidos.has(funcionario.id)); // Filtra os removidos
+      ...funcionarios,
+    ].filter(funcionario => !this.idsRemovidos.has(funcionario.id));
     this.dataSource.data = this.removerDuplicatasPorId(todosFuncionarios);
-  }
-
-  constructor(private funcionarioService: FuncionarioService) {
-    this.carregarFuncionarios();
   }
 
   removeFuncionario(funcionario: Funcionario) {
     if (funcionario && funcionario.id) {
       this.funcionarioService.removerFuncionario(funcionario.id);
-      this.idsRemovidos.add(funcionario.id); // Adiciona à lista de removidos
-      this.carregarFuncionarios();
+      this.idsRemovidos.add(funcionario.id);
+      this.carregarFuncionarios(this.funcionarioService.listarTodosFuncionarios());
     } else {
       console.error('Funcionário inválido:', funcionario);
     }
@@ -217,7 +225,7 @@ export class FuncionarioListComponent implements OnChanges {
 
   private removerDuplicatasPorId(funcionarios: Funcionario[]): Funcionario[] {
     const uniqueIds = new Set();
-    return funcionarios.filter((funcionario) => {
+    return funcionarios.filter(funcionario => {
       if (uniqueIds.has(funcionario.id)) {
         return false;
       } else {
@@ -225,5 +233,9 @@ export class FuncionarioListComponent implements OnChanges {
         return true;
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

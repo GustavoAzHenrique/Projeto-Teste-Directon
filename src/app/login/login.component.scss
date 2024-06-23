@@ -111,4 +111,23 @@ $link-color: #43a047;
       }
     }
   }
+
+  .link-button {
+    background: none;
+    border: none;
+    color: $link-color;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font: inherit;
+    outline: inherit;
+  
+    &:hover {
+      text-decoration: none;
+    }
+  
+    &:focus {
+      outline: none;
+    }
+  }
 }

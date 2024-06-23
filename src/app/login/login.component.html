@@ -31,7 +31,9 @@
       <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Senha é obrigatória</mat-error>
     </mat-form-field>
     <div class="actions">
-      <a href="#" (click)="onForgotPassword()" aria-label="Esqueceu a senha?">Esqueceu a senha?</a>
+      <button type="button" class="link-button" (click)="onForgotPassword()" aria-label="Esqueceu a senha?">
+        Esqueceu a senha?
+      </button>
     </div>
     <div class="buttons">
       <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" aria-label="Entrar">

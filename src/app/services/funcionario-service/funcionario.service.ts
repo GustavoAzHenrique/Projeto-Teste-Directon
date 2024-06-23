@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 
 export interface Funcionario {
   id: number;
@@ -21,7 +22,8 @@ export interface Funcionario {
   providedIn: 'root',
 })
 export class FuncionarioService {
-  private funcionarios: Funcionario[] = [];
+  private funcionariosSubject: BehaviorSubject<Funcionario[]> = new BehaviorSubject<Funcionario[]>([]);
+  funcionarios$: Observable<Funcionario[]> = this.funcionariosSubject.asObservable();
   private nextId = 1;
   private storageAvailable: boolean;
   private readonly STORAGE_KEY = 'funcionarios';
@@ -47,17 +49,17 @@ export class FuncionarioService {
     }
   }
 
-  loadFuncionariosFromStorage() {
+  private loadFuncionariosFromStorage() {
     if (this.storageAvailable) {
-      const storedFuncionarios = localStorage.getItem('funcionarios');
+      const storedFuncionarios = localStorage.getItem(this.STORAGE_KEY);
       if (storedFuncionarios) {
         try {
-          this.funcionarios = JSON.parse(storedFuncionarios);
-          this.nextId = Math.max(...this.funcionarios.map((f) => f.id)) + 1;
-          this.saveFuncionariosToStorage();
+          const funcionarios = JSON.parse(storedFuncionarios);
+          this.funcionariosSubject.next(funcionarios);
+          this.nextId = Math.max(...funcionarios.map((f: Funcionario) => f.id)) + 1;
         } catch (error) {
           console.error('Error parsing stored funcionarios:', error);
-          this.funcionarios = [];
+          this.funcionariosSubject.next([]);
         }
       }
     }
@@ -65,55 +67,50 @@ export class FuncionarioService {
 
   private saveFuncionariosToStorage() {
     if (this.storageAvailable) {
-      localStorage.setItem('funcionarios', JSON.stringify(this.funcionarios));
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.funcionariosSubject.value));
     }
   }
 
   listarTodosFuncionarios(): Funcionario[] {
-    const funcionariosJson = localStorage.getItem(this.STORAGE_KEY);
-    if (funcionariosJson) {
-      return JSON.parse(funcionariosJson).map((funcionario: any) => {
-        return {
-          ...funcionario,
-          dataContratacao: new Date(funcionario.dataContratacao),
-        };
-      });
-    }
-    return [];
+    return this.funcionariosSubject.value.map(funcionario => ({
+      ...funcionario,
+      dataContratacao: new Date(funcionario.dataContratacao),
+    }));
   }
 
   cadastrarFuncionario(funcionario: Funcionario) {
     funcionario.id = this.nextId++;
-    this.funcionarios.push(funcionario);
+    const currentFuncionarios = this.funcionariosSubject.value;
+    currentFuncionarios.push(funcionario);
+    this.funcionariosSubject.next(currentFuncionarios);
     this.saveFuncionariosToStorage();
   }
 
   removerFuncionario(id: number) {
-    let funcionarios = this.listarTodosFuncionarios();
-    funcionarios = funcionarios.filter((f) => f.id !== id);
-    this.saveToStorage(funcionarios);
+    const updatedFuncionarios = this.funcionariosSubject.value.filter(f => f.id !== id);
+    this.funcionariosSubject.next(updatedFuncionarios);
+    this.saveFuncionariosToStorage();
   }
 
   toggleAtivo(id: number) {
-    const funcionario = this.funcionarios.find((f) => f.id === id);
+    const funcionarios = this.funcionariosSubject.value;
+    const funcionario = funcionarios.find(f => f.id === id);
     if (funcionario) {
       funcionario.ativo = !funcionario.ativo;
-      localStorage.setItem('funcionarios', JSON.stringify(this.funcionarios));
+      this.funcionariosSubject.next([...funcionarios]);
+      this.saveFuncionariosToStorage();
     }
   }
 
   atualizarFuncionario(funcionario: Funcionario) {
-    let funcionarios = this.listarTodosFuncionarios();
-    const index = funcionarios.findIndex((f) => f.id === funcionario.id);
+    const funcionarios = this.funcionariosSubject.value;
+    const index = funcionarios.findIndex(f => f.id === funcionario.id);
     if (index !== -1) {
       funcionarios[index] = funcionario;
     } else {
       funcionarios.push(funcionario);
     }
-    this.saveToStorage(funcionarios);
-  }
-
-  private saveToStorage(funcionarios: Funcionario[]) {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(funcionarios));
+    this.funcionariosSubject.next([...funcionarios]);
+    this.saveFuncionariosToStorage();
   }
 }

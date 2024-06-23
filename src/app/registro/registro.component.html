@@ -111,16 +111,22 @@
     </div>
 
     <div class="file-upload-container">
-      <label for="file-upload" class="file-upload-label" matTooltip="Clique para adicionar uma foto. Não é obrigatório." matTooltipPosition="above">
+      <label
+        for="file-upload"
+        class="file-upload-label"
+        matTooltip="Clique para adicionar uma foto. Não é obrigatório."
+        matTooltipPosition="above"
+      >
         <mat-icon>upload</mat-icon> Foto
+
+        <input
+          accept=".png, .jpg, .jpeg, .gif, .bmp, .webp"
+          id="file-upload"
+          type="file"
+          class="file-upload-input"
+          (change)="onFileChange($event)"
+        />
       </label>
-      <input
-        accept=".png, .jpg, .jpeg, .gif, .bmp, .webp"
-        id="file-upload"
-        type="file"
-        class="file-upload-input"
-        (change)="onFileChange($event)"
-      />
     </div>
   </div>
 

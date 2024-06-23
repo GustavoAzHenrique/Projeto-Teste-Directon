@@ -64,7 +64,7 @@ export class FuncionarioFormComponent {
         estado: ['', Validators.required],
       }),
       imagemUrl: [''],
-      active: [true],
+      ativo: [true],
     });
   }
 
@@ -82,7 +82,7 @@ export class FuncionarioFormComponent {
         estado: '',
       },
       imagemUrl: '',
-      active: true
+      ativo: true
     });
   }
 
@@ -109,7 +109,7 @@ export class FuncionarioFormComponent {
     if (this.funcionarioForm.valid) {
       const novoFuncionario: Funcionario = this.funcionarioForm.value;
       this.funcionarioService.cadastrarFuncionario(novoFuncionario);
-      this.atualizarLista.emit(true);
+      this.atualizarLista.emit();
       this.resetForm();
     }
   }
