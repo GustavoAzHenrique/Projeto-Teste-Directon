@@ -130,12 +130,19 @@
     </div>
   </div>
 
-  <div *ngIf="showSuccessMessage" class="success-message">
+  <!-- Mensagem de sucesso para upload de arquivo -->
+  <div *ngIf="showFileUploadSuccessMessage" class="success-message">
     <div class="success-content">
       <mat-icon>check_circle</mat-icon> Arquivo enviado com sucesso!
     </div>
   </div>
 
+  <!-- Mensagem de sucesso para envio do formulário -->
+  <div *ngIf="showFormSubmitSuccessMessage" class="success-message">
+    <div class="success-content">
+      <mat-icon>check_circle</mat-icon> Funcionário cadastrado com sucesso!
+    </div>
+  </div>
   <button
     mat-raised-button
     color="primary"

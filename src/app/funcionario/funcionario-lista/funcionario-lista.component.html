@@ -39,7 +39,9 @@
       mat-cell
       *matCellDef="let element"
       class="column-nome"
-      [matTooltip]="element.nome.length > 15 ? element.nome : ''"
+      [matTooltip]="element.nome"
+      matTooltipPosition="above"
+      [matTooltipDisabled]="element.nome.length <= 15"
     >
       <span class="text-ellipsis">{{ element.nome }}</span>
     </td>
@@ -88,6 +90,16 @@
       *matCellDef="let element"
       class="column-endereco"
       [matTooltip]="
+        element.endereco.street +
+        ', ' +
+        element.endereco.bairro +
+        ', ' +
+        element.endereco.cidade +
+        ' - ' +
+        element.endereco.estado
+      "
+      matTooltipPosition="above"
+      [matTooltipDisabled]="
         (
           element.endereco.street +
           ', ' +
@@ -96,21 +108,13 @@
           element.endereco.cidade +
           ' - ' +
           element.endereco.estado
-        ).length > 40
-          ? element.endereco.street +
-            ', ' +
-            element.endereco.bairro +
-            ', ' +
-            element.endereco.cidade +
-            ' - ' +
-            element.endereco.estado
-          : ''
+        ).length <= 40
       "
     >
-      <span class="text-ellipsis"
-        >{{ element.endereco.street }}, {{ element.endereco.bairro }},
-        {{ element.endereco.cidade }} - {{ element.endereco.estado }}</span
-      >
+      <span class="text-ellipsis">
+        {{ element.endereco.street }}, {{ element.endereco.bairro }},
+        {{ element.endereco.cidade }} - {{ element.endereco.estado }}
+      </span>
     </td>
   </ng-container>
 

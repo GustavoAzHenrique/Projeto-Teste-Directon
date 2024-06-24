@@ -8,16 +8,27 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   standalone: true,
   selector: 'app-main',
   templateUrl: './pagina-inicial.component.html',
   styleUrls: ['./pagina-inicial.component.scss'],
-  imports: [CommonModule, FuncionarioFormComponent, FuncionarioListComponent, MatButtonModule, MatCard, MatIconModule, MatMenuModule],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }]
+  imports: [
+    CommonModule,
+    FuncionarioFormComponent,
+    FuncionarioListComponent,
+    MatButtonModule,
+    MatCard,
+    MatIconModule,
+    MatMenuModule,
+    MatSnackBarModule,
+  ],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }],
 })
 export class PaginaInicialComponent {
+  constructor(private snackBar: MatSnackBar) {}
   loginService = inject(LoginService);
 
   atualizarEvento = false;
@@ -25,9 +36,17 @@ export class PaginaInicialComponent {
   refresh(evento: boolean) {
     this.atualizarEvento = evento;
   }
+
   logout(): void {
-    this.loginService.logout().catch((error) => {
-      console.error('Erro ao fazer logout:', error);
-    });
+    this.loginService.logout().then(() => {
+      this.snackBar.open(
+        'Logout realizado com sucesso. Volte sempre!',
+        'Fechar',
+        {
+          duration: 5000,
+          panelClass: ['snackbar-info'],
+        }
+      );
+    })
   }
 }

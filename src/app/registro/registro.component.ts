@@ -1,19 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  Funcionario,
-  FuncionarioService,
-} from '../services/funcionario-service/funcionario.service';
+import { Funcionario, FuncionarioService } from '../services/funcionario-service/funcionario.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatIcon } from '@angular/material/icon';
@@ -38,7 +30,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 })
 export class FuncionarioFormComponent {
   funcionarioForm!: FormGroup;
-  showSuccessMessage: boolean = false;
+  showFileUploadSuccessMessage: boolean = false;
+  showFormSubmitSuccessMessage: boolean = false;
 
   @Output()
   atualizarLista = new EventEmitter<boolean>();
@@ -84,6 +77,19 @@ export class FuncionarioFormComponent {
       imagemUrl: '',
       ativo: true
     });
+    this.markAllControlsAsUntouchedAndPristine(this.funcionarioForm);
+  }
+
+  markAllControlsAsUntouchedAndPristine(control: AbstractControl) {
+    if (control instanceof FormControl) {
+      control.markAsPristine();
+      control.markAsUntouched();
+      control.setErrors(null);
+    } else if (control instanceof FormGroup) {
+      Object.keys(control.controls).forEach(key => {
+        this.markAllControlsAsUntouchedAndPristine(control.controls[key]);
+      });
+    }
   }
 
   onFileChange(event: Event): void {
@@ -96,9 +102,9 @@ export class FuncionarioFormComponent {
         this.funcionarioForm.patchValue({
           imagemUrl: base64String,
         });
-        this.showSuccessMessage = true;
+        this.showFileUploadSuccessMessage = true;
         setTimeout(() => {
-          this.showSuccessMessage = false;
+          this.showFileUploadSuccessMessage = false;
         }, 3000);
       };
       reader.readAsDataURL(file);
@@ -111,6 +117,10 @@ export class FuncionarioFormComponent {
       this.funcionarioService.cadastrarFuncionario(novoFuncionario);
       this.atualizarLista.emit();
       this.resetForm();
+      this.showFormSubmitSuccessMessage = true;
+      setTimeout(() => {
+        this.showFormSubmitSuccessMessage = false;
+      }, 3000);
     }
   }
 

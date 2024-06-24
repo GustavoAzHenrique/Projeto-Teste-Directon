@@ -1,10 +1,9 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   Auth,
   UserCredential,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
-  user,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable, from } from 'rxjs';
@@ -29,5 +28,4 @@ export class LoginService {
   resetPassword(email: string): Observable<void> {
     return from(sendPasswordResetEmail(this.firebaseAuth, email));
   }
-
 }

@@ -82,11 +82,11 @@ mat-cell {
   justify-content: center;
 }
 
-.column-nome {
-  flex: 1 1 150px;
-  max-width: 200px;
-  min-width: 150px;
-}
+// .column-nome {
+//   flex: 1 1 150px;
+//   max-width: 200px;
+//   min-width: 150px;
+// }
 
 .column-email {
   flex: 1 1 200px;
@@ -111,9 +111,25 @@ mat-cell {
   min-width: 150px;
 }
 
+.column-nome,
 .column-endereco {
-  flex: 2 1 300px;
+  flex: 2 1 200px;
   max-width: 300px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.text-ellipsis {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mat-tooltip {
+  white-space: pre-line; /* Para manter a formatação das quebras de linha */
 }
 
 .img-wrapper {
@@ -145,20 +161,20 @@ table {
   border-collapse: collapse;
 }
 
-.mat-column-nome {
-  max-width: 200px;
-}
+// .mat-column-nome {
+//   max-width: 200px;
+// }
 
-.mat-column-endereco {
-  max-width: 300px;
-}
+// .mat-column-endereco {
+//   max-width: 300px;
+// }
 
-.text-ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-block;
-  max-width: 100%;
-}
+// .text-ellipsis {
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   display: inline-block;
+//   max-width: 100%;
+// }
 
 @media (max-width: 768px) {
   mat-header-cell,
@@ -167,8 +183,8 @@ table {
     font-size: 12px;
   }
 
-  .column-nome,
-  .column-email,
+  // .column-nome,
+  // .column-email,
   .column-data,
   .column-cpf,
   .column-endereco {
