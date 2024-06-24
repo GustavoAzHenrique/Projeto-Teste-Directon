@@ -1,3 +1,4 @@
+// Variáveis de Cores
 $primary-color: #388e3c;
 $secondary-color: #81c784;
 $error-color: #d32f2f;
@@ -8,8 +9,9 @@ $shadow-color: rgba(0, 0, 0, 0.1);
 $header-background: #ffffff;
 $header-shadow: rgba(0, 0, 0, 0.2);
 
+// Cartão da Página
 .pagina-card {
-  width: 100%;
+  width: 100vw;
   height: 80vh;
   margin: 80px auto 0 auto;
   padding: 10px;
@@ -25,6 +27,7 @@ $header-shadow: rgba(0, 0, 0, 0.2);
   }
 }
 
+// Contêiner do Cabeçalho
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -39,11 +42,13 @@ $header-shadow: rgba(0, 0, 0, 0.2);
   z-index: 1000;
 }
 
+// Botão do Cabeçalho
 .header-button {
   order: 2; /* Garante que o botão fique na direita */
   color: $primary-color;
 }
 
+// Contêiner de Imagem do Cabeçalho
 .header-image-container {
   flex-grow: 1;
   display: flex;
@@ -51,12 +56,14 @@ $header-shadow: rgba(0, 0, 0, 0.2);
   order: 1; /* Mantém a imagem centralizada */
 }
 
+// Imagem do Cabeçalho
 .header-image {
   height: 90px; /* Ajuste conforme necessário */
   width: auto;
   border-radius: 50%;
 }
 
+// Contêiner Principal
 .main-container {
   display: flex;
   flex-direction: column;
@@ -67,15 +74,18 @@ $header-shadow: rgba(0, 0, 0, 0.2);
     flex-direction: row;
   }
 
+  // Componente de Registro
   app-registro {
     flex: 0 0 30%;
   }
 
+  // Lista de Funcionários
   app-funcionario-lista {
     flex: 1;
   }
 }
 
+// Menu do Mat
 .mat-menu-content {
   background-color: $header-background;
   color: $text-color;

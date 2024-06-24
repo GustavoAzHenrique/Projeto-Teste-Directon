@@ -1,3 +1,4 @@
+// Variáveis de Cores
 $primary-color: #388e3c;
 $secondary-color: #81c784;
 $error-color: #d32f2f;
@@ -7,6 +8,7 @@ $link-color: #43a047;
 $shadow-color: rgba(0, 0, 0, 0.1);
 $input-background: rgba(255, 255, 255, 0.9);
 
+// Estilos para o formulário principal
 form {
   display: flex;
   flex-direction: column;
@@ -20,6 +22,7 @@ form {
     box-shadow: 0 6px 20px $shadow-color;
   }
 
+  // Estilos para os campos do formulário
   mat-form-field {
     width: 100%;
     background-color: $input-background;
@@ -44,6 +47,7 @@ form {
     }
   }
 
+  // Estilos para o botão de envio do formulário
   button {
     width: 100%;
     align-self: flex-end;
@@ -69,6 +73,7 @@ form {
     }
   }
 
+  // Grupo de campos de endereço
   .address-group {
     display: grid;
     gap: 15px;
@@ -84,6 +89,7 @@ form {
     }
   }
 
+  // Contêiner para o grupo de endereço
   .address-group-container {
     display: grid;
     gap: 15px;
@@ -102,16 +108,18 @@ form {
     }
   }
 
+  // Contêiner para upload de arquivos
   .file-upload-container {
     align-self: end;
-    display: flex;
+    position: relative;
+    display: inline-block;
     align-items: center;
     gap: 10px;
     border: 1px solid darken($primary-color, 15%);
     border-radius: 5px;
     padding: 15px;
     background-color: $input-background;
-    
+
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
 
@@ -124,6 +132,7 @@ form {
       background-color: lighten($primary-color, 40%);
     }
 
+    // Estilos para o rótulo de upload de arquivos
     .file-upload-label {
       display: flex;
       align-items: center;
@@ -141,6 +150,7 @@ form {
     }
   }
 
+  // Estilos para a mensagem de sucesso
   .success-message {
     position: fixed;
     bottom: 20px;
@@ -156,6 +166,7 @@ form {
     animation: fade-slide-in 0.5s ease-out, fade-slide-out 0.5s 2.5s ease-in;
   }
 
+  // Estilos para o conteúdo da mensagem de sucesso
   .success-content {
     display: flex;
     align-items: center;
@@ -166,6 +177,7 @@ form {
     font-size: 24px;
   }
 
+  // Animação para entrada da mensagem de sucesso
   @keyframes fade-slide-in {
     0% {
       opacity: 0;
@@ -177,6 +189,7 @@ form {
     }
   }
 
+  // Animação para saída da mensagem de sucesso
   @keyframes fade-slide-out {
     0% {
       opacity: 1;
@@ -187,5 +200,4 @@ form {
       transform: translateX(100%);
     }
   }
-  
 }

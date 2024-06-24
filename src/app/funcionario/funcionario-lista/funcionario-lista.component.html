@@ -12,7 +12,7 @@
         (change)="toggleFuncionarioStatus(funcionario)"
         (click)="toggleFuncionarioStatus(funcionario)"
         class="toggle-custom"
-        aria-label="Selecionar funcionario {{ funcionario.nome }}"
+        aria-label="Selecionar funcionário {{ funcionario.nome }}"
       ></mat-slide-toggle>
     </td>
   </ng-container>
@@ -51,9 +51,9 @@
   <ng-container matColumnDef="email">
     <th mat-header-cell *matHeaderCellDef class="column-email">Email</th>
     <td mat-cell *matCellDef="let element" class="column-email">
-      <a href="mailto:{{ element.email }}" class="email-link">{{
-        element.email
-      }}</a>
+      <a href="mailto:{{ element.email }}" class="email-link">
+        {{ element.email }}
+      </a>
     </td>
   </ng-container>
 
@@ -63,7 +63,7 @@
       Data de Contratação
     </th>
     <td mat-cell *matCellDef="let element" class="column-data">
-      {{ element.dataContratacao | date : "dd/MM/yyyy" }}
+      {{ element.dataContratacao | date: 'dd/MM/yyyy' }}
     </td>
   </ng-container>
 
@@ -74,9 +74,9 @@
       mat-cell
       *matCellDef="let element"
       class="column-cpf"
-      [matTooltip]="
-        formatCpf(element.cpf).length > 15 ? formatCpf(element.cpf) : ''
-      "
+      [matTooltip]="formatCpf(element.cpf)"
+      matTooltipPosition="above"
+      [matTooltipDisabled]="formatCpf(element.cpf).length <= 15"
     >
       <span class="text-ellipsis">{{ formatCpf(element.cpf) }}</span>
     </td>
@@ -89,31 +89,15 @@
       mat-cell
       *matCellDef="let element"
       class="column-endereco"
-      [matTooltip]="
-        element.endereco.street +
-        ', ' +
-        element.endereco.bairro +
-        ', ' +
-        element.endereco.cidade +
-        ' - ' +
-        element.endereco.estado
-      "
+      [matTooltip]="getEnderecoTooltip(element.endereco)"
       matTooltipPosition="above"
-      [matTooltipDisabled]="
-        (
-          element.endereco.street +
-          ', ' +
-          element.endereco.bairro +
-          ', ' +
-          element.endereco.cidade +
-          ' - ' +
-          element.endereco.estado
-        ).length <= 40
-      "
+      [matTooltipDisabled]="isEnderecoTooltipDisabled(element.endereco)"
     >
       <span class="text-ellipsis">
-        {{ element.endereco.street }}, {{ element.endereco.bairro }},
-        {{ element.endereco.cidade }} - {{ element.endereco.estado }}
+        {{ element.endereco.street }},
+        {{ element.endereco.bairro }},
+        {{ element.endereco.cidade }} -
+        {{ element.endereco.estado }}
       </span>
     </td>
   </ng-container>
@@ -125,11 +109,7 @@
       <button
         mat-icon-button
         (click)="confirmRemoveFuncionario(element)"
-        [matTooltip]="
-          element.ativo
-            ? 'Somente funcionários desativados podem ser excluídos.'
-            : 'Excluir funcionário'
-        "
+        [matTooltip]="getDeleteTooltip(element.ativo)"
         matTooltipPosition="above"
       >
         <mat-icon color="warn">delete</mat-icon>
@@ -137,6 +117,7 @@
     </td>
   </ng-container>
 
+  <!-- Linhas da Tabela -->
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>

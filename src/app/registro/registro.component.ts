@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Funcionario, FuncionarioService } from '../services/funcionario-service/funcionario.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { MatIcon } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
@@ -23,13 +23,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatButtonModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    MatIcon,
+    MatIconModule,
     MatTooltipModule
   ],
   providers: [provideNativeDateAdapter()],
 })
 export class FuncionarioFormComponent {
+  // FormGroup para gerenciar o formulário de funcionário
   funcionarioForm!: FormGroup;
+  
+  // Flags para exibir mensagens de sucesso
   showFileUploadSuccessMessage: boolean = false;
   showFormSubmitSuccessMessage: boolean = false;
 
@@ -43,6 +46,7 @@ export class FuncionarioFormComponent {
     this.createForm();
   }
 
+  // Método para criar o formulário com validações
   createForm() {
     this.funcionarioForm = this.fb.group({
       nome: ['', Validators.required],
@@ -61,6 +65,7 @@ export class FuncionarioFormComponent {
     });
   }
 
+  // Método para redefinir o formulário e marcar controles como intocados e pristine
   resetForm() {
     this.funcionarioForm.reset({
       nome: '',
@@ -80,6 +85,7 @@ export class FuncionarioFormComponent {
     this.markAllControlsAsUntouchedAndPristine(this.funcionarioForm);
   }
 
+  // Marca todos os controles do formulário como pristine e untouched
   markAllControlsAsUntouchedAndPristine(control: AbstractControl) {
     if (control instanceof FormControl) {
       control.markAsPristine();
@@ -92,6 +98,7 @@ export class FuncionarioFormComponent {
     }
   }
 
+  // Método para lidar com a alteração do arquivo (upload de imagem)
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length) {
@@ -111,11 +118,12 @@ export class FuncionarioFormComponent {
     }
   }
 
+  // Método de envio do formulário
   onSubmit() {
     if (this.funcionarioForm.valid) {
       const novoFuncionario: Funcionario = this.funcionarioForm.value;
       this.funcionarioService.cadastrarFuncionario(novoFuncionario);
-      this.atualizarLista.emit();
+      this.atualizarLista.emit(true);
       this.resetForm();
       this.showFormSubmitSuccessMessage = true;
       setTimeout(() => {
@@ -124,6 +132,7 @@ export class FuncionarioFormComponent {
     }
   }
 
+  // Método para obter o controle do formulário por nome
   formControl(control: string): AbstractControl {
     return this.funcionarioForm.controls[control];
   }

@@ -1,66 +1,74 @@
 <form class="ajuste-form" [formGroup]="funcionarioForm" (ngSubmit)="onSubmit()">
+  <!-- Campo Nome -->
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Nome</mat-label>
     <mat-icon matPrefix>person</mat-icon>
     <input
-      placeholder="Nome"
       matInput
       formControlName="nome"
+      placeholder="Nome"
       aria-label="Nome"
     />
-    <mat-error
-      *ngIf="formControl('nome').invalid && formControl('nome').touched"
-      >Nome é obrigatório</mat-error
-    >
+    <mat-error *ngIf="formControl('nome').invalid && formControl('nome').touched">
+      Nome é obrigatório
+    </mat-error>
   </mat-form-field>
 
+  <!-- Campo Email -->
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Email</mat-label>
     <mat-icon matPrefix>email</mat-icon>
     <input
-      placeholder="E-mail"
       matInput
       formControlName="email"
+      placeholder="E-mail"
       aria-label="Email"
     />
-    <mat-error
-      *ngIf="formControl('email').invalid && formControl('email').touched"
-      >Email inválido</mat-error
-    >
+    <mat-error *ngIf="formControl('email').invalid && formControl('email').touched">
+      Email inválido
+    </mat-error>
   </mat-form-field>
 
+  <!-- Campo Data de Contratação -->
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Data de Contratação</mat-label>
     <mat-icon matPrefix>event</mat-icon>
     <input
-      placeholder="Data de Contratação"
       matInput
       [matDatepicker]="picker"
       formControlName="dataContratacao"
+      placeholder="Data de Contratação"
       aria-label="Data de Contratação"
     />
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
+  <!-- Campo CPF -->
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>CPF</mat-label>
     <mat-icon matPrefix>badge</mat-icon>
-    <input placeholder="CPF" matInput formControlName="cpf" aria-label="CPF" />
-    <mat-error *ngIf="formControl('cpf').invalid && formControl('cpf').touched"
-      >CPF inválido</mat-error
-    >
+    <input
+      matInput
+      formControlName="cpf"
+      placeholder="CPF"
+      aria-label="CPF"
+    />
+    <mat-error *ngIf="formControl('cpf').invalid && formControl('cpf').touched">
+      CPF inválido
+    </mat-error>
   </mat-form-field>
 
+  <!-- Grupo de Endereço -->
   <div class="address-group-container">
     <div formGroupName="endereco" class="address-group">
       <mat-form-field appearance="outline">
         <mat-label>Rua</mat-label>
         <mat-icon matPrefix>location_on</mat-icon>
         <input
-          placeholder="Rua"
           matInput
           formControlName="street"
+          placeholder="Rua"
           aria-label="Rua"
         />
       </mat-form-field>
@@ -69,9 +77,9 @@
         <mat-label>CEP</mat-label>
         <mat-icon matPrefix>map</mat-icon>
         <input
-          placeholder="CEP"
           matInput
           formControlName="cep"
+          placeholder="CEP"
           aria-label="CEP"
         />
       </mat-form-field>
@@ -80,9 +88,9 @@
         <mat-label>Bairro</mat-label>
         <mat-icon matPrefix>home</mat-icon>
         <input
-          placeholder="Bairro"
           matInput
           formControlName="bairro"
+          placeholder="Bairro"
           aria-label="Bairro"
         />
       </mat-form-field>
@@ -91,9 +99,9 @@
         <mat-label>Cidade</mat-label>
         <mat-icon matPrefix>location_city</mat-icon>
         <input
-          placeholder="Cidade"
           matInput
           formControlName="cidade"
+          placeholder="Cidade"
           aria-label="Cidade"
         />
       </mat-form-field>
@@ -102,14 +110,15 @@
         <mat-label>Estado</mat-label>
         <mat-icon matPrefix>public</mat-icon>
         <input
-          placeholder="Estado"
           matInput
           formControlName="estado"
+          placeholder="Estado"
           aria-label="Estado"
         />
       </mat-form-field>
     </div>
 
+    <!-- Upload de Foto -->
     <div class="file-upload-container">
       <label
         for="file-upload"
@@ -117,15 +126,14 @@
         matTooltip="Clique para adicionar uma foto. Não é obrigatório."
         matTooltipPosition="above"
       >
-        <mat-icon>upload</mat-icon> Foto
-
         <input
-          accept=".png, .jpg, .jpeg, .gif, .bmp, .webp"
           id="file-upload"
           type="file"
           class="file-upload-input"
+          accept=".png, .jpg, .jpeg, .gif, .bmp, .webp"
           (change)="onFileChange($event)"
         />
+        <mat-icon>upload</mat-icon> Foto
       </label>
     </div>
   </div>
@@ -143,6 +151,8 @@
       <mat-icon>check_circle</mat-icon> Funcionário cadastrado com sucesso!
     </div>
   </div>
+
+  <!-- Botão de Cadastrar -->
   <button
     mat-raised-button
     color="primary"

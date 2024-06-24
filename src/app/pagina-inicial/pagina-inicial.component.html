@@ -1,4 +1,6 @@
+<!-- Contêiner do Cabeçalho -->
 <div class="header-container">
+  <!-- Botão do Menu -->
   <button
     mat-icon-button
     [matMenuTriggerFor]="menu"
@@ -8,6 +10,7 @@
     <mat-icon>account_circle</mat-icon>
   </button>
 
+  <!-- Imagem do Cabeçalho -->
   <div class="header-image-container">
     <img
       class="header-image"
@@ -16,6 +19,7 @@
     />
   </div>
 
+  <!-- Menu do Usuário -->
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="logout()">
       <mat-icon>logout</mat-icon>
@@ -24,6 +28,7 @@
   </mat-menu>
 </div>
 
+<!-- Cartão Principal -->
 <mat-card class="pagina-card">
   <div class="main-container">
     <app-registro (atualizarLista)="refresh($event)"></app-registro>
