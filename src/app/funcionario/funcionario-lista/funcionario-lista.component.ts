@@ -109,7 +109,7 @@ export const MOCK_FUNCIONARIOS: Funcionario[] = [
     id: 6,
     ativo: false,
     imagemUrl: 'https://avatars.githubusercontent.com/u/7?v=4',
-    nome: 'Laura Mendes',
+    nome: 'Laura Mendes Fernandes Marques da Silva Lima',
     email: 'laura.mendes@example.com',
     dataContratacao: new Date('2022-02-28'),
     cpf: '67890123456',
